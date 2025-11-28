@@ -1,6 +1,11 @@
 import React from "react";
 import { createBrowserRouter, RouterProvider, NavLink, Outlet } from "react-router-dom";
-import { HomePage, CheckoutPage, CartPage, TermsPage, ErrorPage } from "./Pages";
+import HomePage from "./Pages/HomePage.jsx";
+import CartPage from "./Pages/CartPage.jsx";
+import CheckoutPage from "./Pages/CheckoutPage.jsx";
+import TermsPage from "./Pages/TermsPage.jsx";
+import ErrorPage from "./Pages/ErrorPage.jsx";
+import ProductPage from "./Pages/ProductPage.jsx";
 
 // ----- Main Layout -----
 const MainWrapper = () => (
@@ -28,7 +33,7 @@ const MainWrapper = () => (
       }}>
         <div style={{ fontWeight: "bold", color: "#007bff" }}>MyShop</div>
         <div>
-          {["/", "/card", "/checkout"].map((path, idx) => {
+          {["/", "/cart", "/checkout"].map((path, idx) => {
             const label = path === "/" ? "Home" : path.slice(1).charAt(0).toUpperCase() + path.slice(2);
             return (
               <NavLink
@@ -69,22 +74,24 @@ const MainWrapper = () => (
 );
 
 // ----- Router Setup -----
-const router = createBrowserRouter([
+const router = createBrowserRouter(
+  [
+    {
+      path: "/",
+      element: <MainWrapper />,
+      errorElement: <ErrorPage />,
+      children: [
+        { index: true, element: <HomePage /> },
+        { path: "cart", element: <CartPage /> },               // FIXED
+        { path: "checkout", element: <CheckoutPage /> },
+        { path: "terms", element: <TermsPage /> },
+        { path: "product/:id", element: <ProductPage /> },    // ADDED
+      ],
+    },
+  ],
   {
-    path: "/",
-    element: <MainWrapper />,
-    errorElement: <ErrorPage />,
-    children: [
-      { index: true, element: <HomePage /> },
-      { path: "card", element: <CartPage /> },
-      { path: "checkout", element: <CheckoutPage /> },
-      { path: "terms", element: <TermsPage /> },
-    ],
-  },
-],
-{
-   basename: "/Final-project",
-}
+    basename: "/Final-project", // keep if deploying to subfolder
+  }
 );
 
 function App() {
