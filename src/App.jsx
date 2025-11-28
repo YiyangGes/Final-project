@@ -1,40 +1,59 @@
 import React from "react";
-import { createBrowserRouter, RouterProvider, NavLink, Outlet } from "react-router-dom";
+import {
+  createBrowserRouter,
+  RouterProvider,
+  NavLink,
+  Outlet,
+} from "react-router-dom";
+
 import HomePage from "./Pages/HomePage.jsx";
 import CartPage from "./Pages/CartPage.jsx";
 import CheckoutPage from "./Pages/CheckoutPage.jsx";
 import TermsPage from "./Pages/TermsPage.jsx";
 import ErrorPage from "./Pages/ErrorPage.jsx";
 import ProductPage from "./Pages/ProductPage.jsx";
+import CartProvider from "./Pages/CartContext.jsx";
 
-// ----- Main Layout -----
+// ------------------ Layout ------------------
 const MainWrapper = () => (
-  <div style={{
-    minHeight: "100vh",
-    display: "flex",
-    flexDirection: "column",
-    fontFamily: "Arial, sans-serif",
-    background: "#f9f9f9",
-  }}>
-    <div style={{
-      width: "900px",
+  <div
+    style={{
+      minHeight: "100vh",
       display: "flex",
       flexDirection: "column",
-      flex: 1,
-      margin: "0 auto",
-    }}>
-      <nav style={{
+      fontFamily: "Arial, sans-serif",
+      background: "#f9f9f9",
+    }}
+  >
+    <div
+      style={{
+        width: "900px",
         display: "flex",
-        justifyContent: "space-between",
-        padding: "12px 20px",
-        background: "#e0e0e0ff",
-        borderRadius: "8px",
-        marginBottom: "20px"
-      }}>
+        flexDirection: "column",
+        flex: 1,
+        margin: "0 auto",
+      }}
+    >
+      {/* Navbar */}
+      <nav
+        style={{
+          display: "flex",
+          justifyContent: "space-between",
+          padding: "12px 20px",
+          background: "#e0e0e0ff",
+          borderRadius: "8px",
+          marginBottom: "20px",
+        }}
+      >
         <div style={{ fontWeight: "bold", color: "#007bff" }}>MyShop</div>
+
         <div>
           {["/", "/cart", "/checkout"].map((path, idx) => {
-            const label = path === "/" ? "Home" : path.slice(1).charAt(0).toUpperCase() + path.slice(2);
+            const label =
+              path === "/"
+                ? "Home"
+                : path.slice(1).charAt(0).toUpperCase() + path.slice(2);
+
             return (
               <NavLink
                 key={path}
@@ -44,7 +63,7 @@ const MainWrapper = () => (
                   marginRight: idx < 2 ? "15px" : "0",
                   textDecoration: "none",
                   color: isActive ? "#007bff" : "#333",
-                  fontWeight: isActive ? "bold" : "normal"
+                  fontWeight: isActive ? "bold" : "normal",
                 })}
               >
                 {label}
@@ -58,22 +77,28 @@ const MainWrapper = () => (
         <Outlet />
       </main>
 
-      <footer style={{
-        padding: "12px 0",
-        background: "#dbd9d9ff",
-        textAlign: "center",
-        color: "#2f2f2fff",
-        fontSize: "14px",
-        borderRadius: "8px",
-        marginTop: "20px"
-      }}>
-        © 2025 MyShop • <NavLink to="/terms" style={{ textDecoration: "none", color: "#007bff" }}>Terms & Conditions</NavLink>
+      {/* Footer */}
+      <footer
+        style={{
+          padding: "12px 0",
+          background: "#dbd9d9ff",
+          textAlign: "center",
+          color: "#2f2f2fff",
+          fontSize: "14px",
+          borderRadius: "8px",
+          marginTop: "20px",
+        }}
+      >
+        © 2025 MyShop •{" "}
+        <NavLink to="/terms" style={{ textDecoration: "none", color: "#007bff" }}>
+          Terms & Conditions
+        </NavLink>
       </footer>
     </div>
   </div>
 );
 
-// ----- Router Setup -----
+// ------------------ Router ------------------
 const router = createBrowserRouter(
   [
     {
@@ -82,20 +107,22 @@ const router = createBrowserRouter(
       errorElement: <ErrorPage />,
       children: [
         { index: true, element: <HomePage /> },
-        { path: "cart", element: <CartPage /> },               // FIXED
+        { path: "cart", element: <CartPage /> },
         { path: "checkout", element: <CheckoutPage /> },
         { path: "terms", element: <TermsPage /> },
-        { path: "product/:id", element: <ProductPage /> },    // ADDED
+        { path: "product/:id", element: <ProductPage /> },
       ],
     },
   ],
-  {
-    basename: "/Final-project", // keep if deploying to subfolder
-  }
+  { basename: "/Final-project" }
 );
 
 function App() {
-  return <RouterProvider router={router} />;
+  return (
+    <CartProvider>
+      <RouterProvider router={router} />
+    </CartProvider>
+  );
 }
 
 export default App;
