@@ -1,4 +1,4 @@
-export const HomePage = () => {
+const HomePage = () => {
     // Product data
 const products = [
   { id: 1, name: "iPhone 17", price: 1400 },
@@ -45,26 +45,5 @@ const products = [
   );
 };
 
-export const CartPage = () => (
-  <div style={{ textAlign: "center" }}>
-    <h1>Your Shopping Cart</h1>
-    <p>Welcome to MyShop! We bring you the latest smartphones at the best prices.</p>
-  </div>
-);
 
-export const CheckoutPage = () => (
-  <div style={{ textAlign: "center" }}>
-    <h1>Checkout</h1>
-    <p>Email: support@myshop.com • Phone: 1800-MYSHOP</p>
-  </div>
-);
-
-
-export const TermsPage = () => (
-  <div style={{ textAlign: "center" }}>
-    <h1>Terms & Conditions</h1>
-    <p>By using this site, you agree to our terms and conditions.</p>
-  </div>
-);
-
-export const ErrorPage = () => <h2 style={{ textAlign: "center" }}>Page not found.</h2>;
+export default HomePage;
