@@ -1,8 +1,63 @@
-const CartPage = () => (
-  <div style={{ textAlign: "center" }}>
-    <h1>Your Shopping Cart</h1>
-    <p>Welcome to MyShop! We bring you the latest smartphones at the best prices.</p>
-  </div>
-);
+import { useContext } from "react";
+import { Link } from "react-router-dom";
+import { CartContext } from "./CartContext.jsx";
+import CartItem from "./Components/CartItem.jsx";
+
+const CartPage = () => {
+  const { cart } = useContext(CartContext);
+  const total = cart.reduce((sum, item) => sum + item.price * item.qty, 0);
+
+  return (
+    <div>
+
+      <h1 style={{ margin: "0 0 30px 0", textAlign: "left" }}>Your Shopping Cart</h1>
+
+      <div>
+        {cart.map((item) => (
+          <CartItem
+            key={item.id}
+            id={item.id}
+            price={item.price}
+            image={item.image}
+            qty={item.qty}
+          />
+        ))}
+      </div>
+
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "flex-end",
+          alignItems: "center",
+          marginTop: "30px",
+          paddingTop: "20px",
+          borderTop: "2px solid #ddd",
+        }}
+      >
+        <div style={{ textAlign: "right" }}>
+          <p style={{ fontSize: "24px", fontWeight: "bold", margin: "0 0 15px 0" }}>
+            Total: ${total}
+          </p>
+          <Link to="/checkout" style={{ textDecoration: "none" }}>
+            <button
+              style={{
+                padding: "12px 30px",
+                cursor: "pointer",
+                background: "#007bff",
+                color: "#fff",
+                border: "none",
+                borderRadius: "6px",
+                fontSize: "16px",
+                fontWeight: "bold",
+              }}
+            >
+              Check Out
+            </button>
+          </Link>
+        </div>
+      </div>
+    </div>
+  );
+};
 
 export default CartPage;
