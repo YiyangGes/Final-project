@@ -27,7 +27,7 @@ const MainWrapper = () => (
   >
     <div
       style={{
-        width: "900px",
+        width: "100%",
         display: "flex",
         flexDirection: "column",
         flex: 1,
@@ -41,7 +41,7 @@ const MainWrapper = () => (
           justifyContent: "space-between",
           padding: "12px 20px",
           background: "#e0e0e0ff",
-          borderRadius: "8px",
+          // borderRadius: "8px",
           marginBottom: "20px",
         }}
       >
@@ -85,8 +85,8 @@ const MainWrapper = () => (
           textAlign: "center",
           color: "#2f2f2fff",
           fontSize: "14px",
-          borderRadius: "8px",
-          marginTop: "20px",
+          // borderRadius: "8px",
+          marginTop: "32px",
         }}
       >
         © 2025 MyShop •{" "}

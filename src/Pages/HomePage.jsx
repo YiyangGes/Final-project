@@ -1,17 +1,52 @@
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 import { CartContext } from "./CartContext.jsx";
+
+const BASE_URL = "https://huitian.serv00.net/project/?type=list&batchNumber=";
+
+async function fetchBatch(batchNumber) {
+  const res = await fetch(BASE_URL + batchNumber);
+  if (!res.ok) throw new Error("Failed to load products (batch " + batchNumber + ")");
+  return res.json();
+}
 
 const HomePage = () => {
   const { addToCart } = useContext(CartContext);
+  const [products, setProducts] = useState([]); // for store the fetched data
+  const [hasMore, setHasMore] = useState(true);
+  const [nextBatch, setNextBatch] = useState(3); // 1 & 2 is already loaded when initializing
 
-  const products = [
-    { id: 1, name: "iPhone 17", price: 1400, image: "https://via.placeholder.com/100" },
-    { id: 2, name: "iPhone 16", price: 1200, image: "https://via.placeholder.com/100" },
-    { id: 3, name: "iPhone 15", price: 1000, image: "https://via.placeholder.com/100" },
-    { id: 4, name: "Samsung Galaxy S25", price: 800, image: "https://via.placeholder.com/100" },
-    { id: 5, name: "Samsung Galaxy S24", price: 600, image: "https://via.placeholder.com/100" },
-    { id: 6, name: "Samsung Galaxy S23", price: 400, image: "https://via.placeholder.com/100" },
-  ];
+  useEffect(() => {
+    async function loadProducts() {
+      try {
+
+        const [batch1, batch2] = await Promise.all([
+          fetchBatch(1),
+          fetchBatch(2),
+        ]);
+
+        const initialProducts = [...batch1.products, ...batch2.products];
+        setProducts(initialProducts);
+
+      } catch (err) {
+        console.log("something went wrong")
+      }
+    }
+
+    loadProducts();
+  }, []);
+
+  async function handleLoadMore() {
+    try {
+      const batch = await fetchBatch(nextBatch);
+      setProducts((prev) => [...prev, ...batch.products]);
+      setNextBatch((prev) => prev + 1);
+      setHasMore(batch.moreProducts);
+    } catch (err) {
+      console.error(err);
+    } finally {
+      setLoading(false);
+    }
+  }
 
   return (
     <>
@@ -22,38 +57,63 @@ const HomePage = () => {
           display: "grid",
           gridTemplateColumns: "repeat(3, 1fr)",
           gap: "20px",
+          margin:"0 48px 32px 48px"
         }}
       >
         {products.map((product) => (
           <div
-            key={product.id}
+            key={product.productId}
             style={{
-              border: "1px solid #ccc",
+              // border: "1px solid #e8e5e5ff",
               borderRadius: "8px",
-              padding: "16px",
+              padding: "24px",
               textAlign: "center",
-              boxShadow: "0 2px 5px rgba(0,0,0,0.1)",
+              boxShadow: "0 2px 5px rgba(0,0,0,0.08)",
+              backgroundColor: "#fff",
+              height:"300px"
             }}
           >
-            <h3>{product.name}</h3>
-            <p>${product.price}</p>
+            <img height="60%" src= {product.imageUrl}/>
+            <h3>{product.productId}</h3>
+            <p>{product.price}</p>
 
             <button
               onClick={() => addToCart(product)}
               style={{
-                padding: "8px 12px",
+                padding: "8px 36px",
                 border: "none",
                 borderRadius: "6px",
                 backgroundColor: "#007bff",
                 color: "#fff",
                 cursor: "pointer",
+                transition: "transform 0.1s",
               }}
+              onMouseDown={(e) => (e.currentTarget.style.transform = "scale(0.92)")}
+              onMouseUp={(e) => (e.currentTarget.style.transform = "scale(1)")}
             >
               Add to Cart
             </button>
           </div>
         ))}
       </div>
+
+      {/* configure load more function, one of the image link is not valid */}
+      {hasMore && (
+        <button
+        onClick={() => handleLoadMore()}
+        style={{
+          padding: "8px 36px",
+          border: "none",
+          borderRadius: "6px",
+          backgroundColor: "#007bff",
+          color: "#fff",
+          cursor: "pointer",
+          margin:"0 auto",
+          display: "block",
+        }}>
+        Load More Products
+      </button>
+      )}
     </>
   );
 };
