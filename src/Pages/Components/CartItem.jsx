@@ -1,12 +1,12 @@
 import React, { useContext } from "react";
 import { CartContext } from "../CartContext.jsx";
 
-const CartItem = ({ id, name, price, image, qty }) => {
+const CartItem = ({ productId, price, imageUrl, qty }) => {
   const { updateQty } = useContext(CartContext);
 
-  const increase = () => updateQty(id, qty + 1);
-  const decrease = () => updateQty(id, qty - 1);
-  const remove = () => updateQty(id, 0);
+  const increase = () => updateQty(productId, qty + 1);
+  const decrease = () => updateQty(productId, qty - 1);
+  const remove = () => updateQty(productId, 0);
 
   const buttonStyle = {
     padding: "8px 16px",
@@ -43,8 +43,8 @@ const CartItem = ({ id, name, price, image, qty }) => {
       }}
     >
       <img
-        src={image}
-        alt={`Product ${id}`}
+        src={imageUrl}
+        alt={`Product ${productId}`}
         style={{
           width: "100px",
           height: "100px",
@@ -62,7 +62,7 @@ const CartItem = ({ id, name, price, image, qty }) => {
         }}
       >
         <p style={{ margin: "0 0 4px 0" }}>
-          <strong>Product ID:</strong> {id}
+          <strong>Product ID:</strong> {productId}
         </p>
         <p style={{ margin: 0 }}>
           <strong>Price:</strong> ${price}
@@ -131,7 +131,7 @@ const CartItem = ({ id, name, price, image, qty }) => {
             textAlign: "center",
           }}
         >
-          ${qty * price}
+          ${(qty * price)}
         </p>
         <button
           onClick={remove}
