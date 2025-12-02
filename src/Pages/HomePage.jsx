@@ -104,17 +104,22 @@ const HomePage = () => {
       {/* configure load more function, one of the image link is not valid */}
       {hasMore && (
         <button
-        onClick={() => handleLoadMore()}
-        style={{
-          padding: "8px 36px",
-          border: "none",
-          borderRadius: "6px",
-          backgroundColor: "#007bff",
-          color: "#fff",
-          cursor: "pointer",
-          margin:"0 auto",
-          display: "block",
-        }}>
+          onClick={() => handleLoadMore()}
+          style={{
+            padding: "8px 36px",
+            border: "1px solid #007bff",
+            borderRadius: "6px",
+            backgroundColor: "rgb(249, 249, 249)",
+            color: "#007bff",
+            cursor: "pointer",
+            margin:"0 auto",
+            display: "block",
+            transition: "transform 0.1s",
+            boxShadow: "1px 1px 5px rgba(0,0,0,0.08)",
+          }}
+          onMouseDown={(e) => (e.currentTarget.style.transform = "scale(0.92)")}
+          onMouseUp={(e) => (e.currentTarget.style.transform = "scale(1)")}
+        >
         Load More Products
       </button>
       )}
