@@ -24,6 +24,10 @@ const HomePage = () => {
           fetchBatch(2),
         ]);
 
+        console.log("Batch 1:", batch1); // Debug: check API structure
+        console.log("First product:", batch1.products[0]); // Debug: see product structure
+
+
         const initialProducts = [...batch1.products, ...batch2.products];
         setProducts(initialProducts);
 

@@ -5,20 +5,20 @@ import CartItem from "./Components/CartItem.jsx";
 
 const CartPage = () => {
   const { cart } = useContext(CartContext);
-  const total = cart.reduce((sum, item) => sum + item.price * item.qty, 0);
+  const total = cart.reduce((sum, item) => sum + (item.price * item.qty), 0);
 
   return (
-    <div>
+    <div style={{ maxWidth: "1200px", margin: "0 auto", padding: "0 40px" }}>
 
       <h1 style={{ margin: "0 0 30px 0", textAlign: "left" }}>Your Shopping Cart</h1>
 
       <div>
         {cart.map((item) => (
           <CartItem
-            key={item.id}
-            id={item.id}
+            key={item.productId}
+            productId={item.productId}
             price={item.price}
-            image={item.image}
+            imageUrl={item.imageUrl}
             qty={item.qty}
           />
         ))}
