@@ -1,0 +1,77 @@
+/* Styles for ProductPage image containers */
+.product-page-row {
+  display: flex;
+  gap: 80px;
+  padding: 32px;
+  max-width: 100%;
+  justify-content: center;
+  align-items: start;
+}
+
+.thumb-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  width: 180px;
+}
+
+.thumb-wrapper {
+  width: 100%;
+  height: 150px;
+  border-radius: 6px;
+  overflow: hidden;
+  cursor: pointer;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+  background-color: white;
+}
+
+.thumb-wrapper.selected {
+  outline: 3px solid #007bff;
+}
+
+.thumb-wrapper img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
+}
+
+.main-image-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.main-image-container img {
+  max-height: 648px;
+  width: auto;
+  max-width: 100%;
+  object-fit: contain;
+  display: block;
+  box-shadow: 1px 1px 5px rgba(0,0,0,0.08);
+  border-radius: 12px;
+}
+
+.product-description {
+  background-color: white;
+  padding:24px;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.08);
+  border-radius: 12px;
+  width: 70%;
+}
+
+/* Add to Cart button styles moved from inline JSX */
+.add-to-cart-btn {
+  padding: 12px 28px;
+  border: none;
+  border-radius: 6px;
+  background-color: #007bff;
+  color: #fff;
+  cursor: pointer;
+  transition: transform 0.1s;
+  margin:12px 0px;
+}
+
+.add-to-cart-btn:active {
+  transform: scale(0.92);
+}

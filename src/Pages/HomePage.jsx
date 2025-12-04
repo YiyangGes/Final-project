@@ -1,5 +1,6 @@
 import { useContext, useEffect, useState } from "react";
 import { CartContext } from "./CartContext.jsx";
+import { Link } from "react-router-dom";
 
 const BASE_URL = "https://huitian.serv00.net/project/?type=list&batchNumber=";
 
@@ -47,8 +48,6 @@ const HomePage = () => {
       setHasMore(batch.moreProducts);
     } catch (err) {
       console.error(err);
-    } finally {
-      setLoading(false);
     }
   }
 
@@ -77,7 +76,14 @@ const HomePage = () => {
               height:"300px"
             }}
           >
-            <img height="60%" src= {product.imageUrl}/>
+            <Link to={`/product/${product.productId}`} state={{ product }}>
+              <img 
+                height="60%" 
+                src= {product.imageUrl}
+                style={{ cursor: "pointer" }}
+              />
+            </Link>
+
             <h3>{product.productId}</h3>
             <p>{product.price}</p>
 
