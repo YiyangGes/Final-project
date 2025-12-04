@@ -50,11 +50,13 @@ const MainWrapper = () => {
             background: "#e0e0e0ff",
             // borderRadius: "8px",
             marginBottom: "20px",
-          }}
-        >
-          <div style={{ fontWeight: "bold", color: "#007bff" }}>MyShop</div>
+            }}
+          >
+            <NavLink to="/" end style={{ fontWeight: "bold", color: "#007bff", textDecoration: "none" }}>
+            MyShop
+            </NavLink>
 
-          <div>
+            <div>
             {["/", "/cart", "/checkout"].map((path, idx) => {
               const isCartPath = path === "/cart";
               
@@ -121,12 +123,21 @@ const MainWrapper = () => {
             fontSize: "14px",
             // borderRadius: "8px",
             marginTop: "32px",
+            paddingTop:"12px"
           }}
         >
-          © 2025 MyShop •{" "}
-          <NavLink to="/terms" style={{ textDecoration: "none", color: "#007bff" }}>
+          <div style={{padding:"8px 0px"}}>
+            <span>Contact us: support@myshop.com</span>
+            <span> | </span>
+            <span>Phone: +1 123 456 7890</span>
+          </div>
+          <div style={{padding:"8px 0px"}}>
+            <NavLink to="/terms" style={{ textDecoration: "none", color: "#007bff" }}>
             Terms & Conditions
-          </NavLink>
+            </NavLink>
+            <span> | </span>
+            <span>Privacy Policy</span>
+          </div>          
         </footer>
       </div>
     </div>
